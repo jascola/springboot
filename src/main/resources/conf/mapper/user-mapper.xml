@@ -5,29 +5,7 @@
 <!-- namespcae原来指命名空间 -->
 <!-- 现在namespace指要映射给哪个接口 -->
 <mapper namespace="com.jascola.model.dao.UserDao">
-
-    <insert id="insert" parameterType="com.jascola.model.entity.UserEntity">
-        insert into user (phone,name,password,email) VALUES (#{phone},#{name},#{password},#{email})
-    </insert>
-
-    <select id="selectByPhone" parameterType="java.lang.String" resultType="com.jascola.model.entity.UserEntity">
-        select phone , name, password, email from user
-        where phone = #{phone}
-    </select>
-
-    <delete id="delete" parameterType="java.lang.String" >
-        DELETE FROM user WHERE phone = #{phone}
-    </delete>
-
-    <update id="update" parameterType="com.jascola.model.entity.UserEntity">
-        UPDATE USER set phone=#{phone},name=#{name},password=#{password},email=#{email} where id=#{id}
-    </update>
-
-    <select id="selectById" parameterType="java.lang.Integer" resultType="com.jascola.model.entity.UserEntity">
-        select phone , name, password, email from user where id = #{id}
-    </select>
-
     <select id="selectAll" resultType="com.jascola.model.entity.UserEntity">
-        SELECT *FROM user
+        SELECT *FROM users
     </select>
 </mapper>
