@@ -7,13 +7,15 @@ import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.context.annotation.*;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.io.IOException;
 
 
 @Configuration
-@ComponentScan("com.jascola.model.dao")
+@ComponentScan({"com.jascola.model.dao","com.jascola.job"})
 @PropertySource(value = "classpath:database.properties")
+@EnableScheduling
 public class Config {
     /**
      * 配置数据库连接

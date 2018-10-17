@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) {
         try {
-            http.authorizeRequests().anyRequest().authenticated()
+            http.authorizeRequests().antMatchers("/**").hasRole("ADMIN")
                     .and().formLogin().permitAll();
 
         } catch (Exception e) {
@@ -33,12 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         try {
-            /*auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder()).withUser("jascola").
-                    password(new BCryptPasswordEncoder().encode("123456")).roles("ADMIN");*/
-            auth.jdbcAuthentication().dataSource(dataSource).
-                    usersByUsernameQuery("select username,password, enabled from users where username = ?").
-                    authoritiesByUsernameQuery("select username,role from roles where username = ?").
-                    passwordEncoder(new BCryptPasswordEncoder());
+            auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder()).withUser("jascola").
+                    password(new BCryptPasswordEncoder().encode("123456")).roles("ADMIN");
         } catch (Exception e) {
             logger.info(e.getLocalizedMessage(), e);
 
