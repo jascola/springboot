@@ -15,7 +15,6 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 public class WebConfig extends WebMvcConfigurationSupport {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-       /* registry.addViewController("/").setViewName("/index");*/
     }
     /**
      * springBoot中完成了自动装配，直接在application.properties中配置即可

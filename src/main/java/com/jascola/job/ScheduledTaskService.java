@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScheduledTaskService {
 
-    @Scheduled(fixedRate = 5000)
+    /*@Scheduled(fixedRate = 5000)
     public void sout(){
         System.out.println("Are you ok?");
     }
@@ -15,5 +15,5 @@ public class ScheduledTaskService {
     public void sout2(){
 
         System.out.println("I am fine,thank you");
-    }
+    }*/
 }
