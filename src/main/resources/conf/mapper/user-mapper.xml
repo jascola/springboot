@@ -6,6 +6,10 @@
 <!-- 现在namespace指要映射给哪个接口 -->
 <mapper namespace="com.jascola.model.dao.UserDao">
     <select id="selectAll" resultType="com.jascola.model.entity.UserEntity">
-        SELECT *FROM users
+        SELECT *FROM users;
     </select>
+
+    <insert id="insert" parameterType="com.jascola.model.entity.UserEntity">
+        insert into shit(username,password) values(#{username},#{password});
+    </insert>
 </mapper>
