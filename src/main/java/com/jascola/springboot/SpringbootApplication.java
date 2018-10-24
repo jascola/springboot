@@ -4,6 +4,8 @@ import com.jascola.demo.DataService;
 import com.jascola.jms.Msg;
 import com.jascola.model.dao.UserDao;
 import com.jascola.model.entity.UserEntity;
+import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.activemq.command.ActiveMQTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -23,58 +25,78 @@ import javax.annotation.Resource;
 
 @SpringBootApplication
 @Controller
-public class SpringbootApplication  {
-	Logger logger = LoggerFactory.getLogger(SpringApplication.class);
-	@Autowired
-	JmsTemplate jmsTemplate;
-	@Autowired
-	JobLauncher jobLauncher;
-	@Autowired
-	Job importJob;
-	static int i=0;
-	@Autowired
-	UserDao dao;
-	//DataService自动装配，不需要配置bean
-	DataService service;
-	@Resource
-	public void setService(DataService service)	{
-		 this.service = service;
-	}
+public class SpringbootApplication {
+    Logger logger = LoggerFactory.getLogger(SpringApplication.class);
 
-	@RequestMapping(value = "/admin")
-	public String getAdmin(Model model){
-		System.out.println(service.sayHello());
-		model.addAttribute("hah",dao.selectAll());
-		return "index";
-	}
-	@RequestMapping(value = "/login")
-	public String login(Model model){
-		i++;
-		System.out.println("login"+i);
-		return "check/login";
-	}
-	@RequestMapping(value = "/ex")
-	@ResponseBody
-	public String  ex(){
-		try {
-			JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters();
-			jobLauncher.run(importJob, jobParameters);
-		}catch (Exception e){
-			logger.info(e.getLocalizedMessage(),e);
-		}
-		return "hah";
-	}
-	@RequestMapping(value = "/jms")
-	@ResponseBody
-	public String jms(){
-		try {
-			jmsTemplate.send("gogogo",new Msg());
-		}catch (Exception e){
-			logger.info(e.getLocalizedMessage(),e);
-		}
-		return "hah";
-	}
-	public static void main(String[] args) {
-		SpringApplication.run(SpringbootApplication.class, args);
-	}
+    @Autowired
+    JmsTemplate jmsTemplate;
+
+    ActiveMQTopic activeMQTopic;
+    @Resource
+    public void setActiveMQTopic(ActiveMQTopic activeMQTopic) {
+        this.activeMQTopic = activeMQTopic;
+    }
+
+    ActiveMQQueue activeMQQueue;
+    @Resource
+    public void setActiveMQQueue(ActiveMQQueue activeMQQueue) {
+        this.activeMQQueue = activeMQQueue;
+    }
+
+    @Autowired
+    JobLauncher jobLauncher;
+
+    @Autowired
+    Job importJob;
+
+    @Autowired
+    UserDao dao;
+
+    //DataService自动装配，不需要配置bean
+    DataService service;
+
+    @Resource
+    public void setService(DataService service) {
+        this.service = service;
+    }
+
+    @RequestMapping(value = "/admin")
+    public String getAdmin(Model model) {
+        System.out.println(service.sayHello());
+        model.addAttribute("hah", dao.selectAll());
+        return "index";
+    }
+
+    @RequestMapping(value = "/login")
+    public String login(Model model) {
+        return "check/login";
+    }
+
+    @RequestMapping(value = "/ex")
+    @ResponseBody
+    public String ex() {
+        try {
+            JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters();
+            jobLauncher.run(importJob, jobParameters);
+        } catch (Exception e) {
+            logger.info(e.getLocalizedMessage(), e);
+        }
+        return "hah";
+    }
+
+    @RequestMapping(value = "/jms")
+    @ResponseBody
+    public String jms() {
+        try {
+            jmsTemplate.send(activeMQQueue,new Msg());
+            jmsTemplate.send(activeMQTopic,new Msg());
+        } catch (Exception e) {
+            logger.info(e.getLocalizedMessage(), e);
+        }
+        return "hah";
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpringbootApplication.class, args);
+    }
 }

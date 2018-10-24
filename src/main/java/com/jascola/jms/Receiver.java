@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Receiver {
-    Logger logger = LoggerFactory.getLogger(Receiver.class);
+    /*Logger logger = LoggerFactory.getLogger(Receiver.class);
     @JmsListener(destination = "gogogo")
     public void receiveMessage(String message){
         logger.info("接收到消息《"+message+"》");
-    }
+    }*/
 }
