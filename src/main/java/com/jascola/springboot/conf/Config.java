@@ -4,19 +4,17 @@ import com.jascola.bean.JdbcConnectBean;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
-import org.springframework.batch.support.transaction.ResourcelessTransactionManager;
 import org.springframework.context.annotation.*;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import java.io.IOException;
 
 
 @Configuration
-@ComponentScan({"com.jascola.model.dao","com.jascola.job"})
+@ComponentScan({"com.jascola.model.dao","com.jascola.job","com.jascola.jms"})
 @PropertySource(value = "classpath:database.properties")
 @EnableScheduling
 public class Config {

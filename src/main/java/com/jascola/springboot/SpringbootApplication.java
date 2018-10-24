@@ -1,6 +1,7 @@
 package com.jascola.springboot;
 
 import com.jascola.demo.DataService;
+import com.jascola.jms.Msg;
 import com.jascola.model.dao.UserDao;
 import com.jascola.model.entity.UserEntity;
 import org.slf4j.Logger;
@@ -12,20 +13,20 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @SpringBootApplication
 @Controller
 public class SpringbootApplication  {
 	Logger logger = LoggerFactory.getLogger(SpringApplication.class);
+	@Autowired
+	JmsTemplate jmsTemplate;
 	@Autowired
 	JobLauncher jobLauncher;
 	@Autowired
@@ -63,7 +64,16 @@ public class SpringbootApplication  {
 		}
 		return "hah";
 	}
-
+	@RequestMapping(value = "/jms")
+	@ResponseBody
+	public String jms(){
+		try {
+			jmsTemplate.send("gogogo",new Msg());
+		}catch (Exception e){
+			logger.info(e.getLocalizedMessage(),e);
+		}
+		return "hah";
+	}
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootApplication.class, args);
 	}
