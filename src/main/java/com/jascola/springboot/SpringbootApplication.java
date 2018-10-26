@@ -26,7 +26,7 @@ import javax.annotation.Resource;
 @SpringBootApplication
 @Controller
 public class SpringbootApplication {
-    Logger logger = LoggerFactory.getLogger(SpringApplication.class);
+    private Logger logger = LoggerFactory.getLogger(SpringApplication.class);
 
     @Autowired
     JmsTemplate jmsTemplate;

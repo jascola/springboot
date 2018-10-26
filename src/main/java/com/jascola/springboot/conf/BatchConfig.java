@@ -29,7 +29,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableBatchProcessing
 public class BatchConfig {
-    Logger logger = LoggerFactory.getLogger(BatchConfig.class);
+    private Logger logger = LoggerFactory.getLogger(BatchConfig.class);
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
 
@@ -64,7 +64,7 @@ public class BatchConfig {
     }
 
     /**
-     * 配置要执行的job，包含多个step
+     * 配置job执行之前的监听
      */
     @Bean
     public static MyJobListener listener() {

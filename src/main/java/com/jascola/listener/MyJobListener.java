@@ -6,7 +6,7 @@ import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
 
 public class MyJobListener implements JobExecutionListener {
-    Logger logger = LoggerFactory.getLogger(MyJobListener.class);
+    private Logger logger = LoggerFactory.getLogger(MyJobListener.class);
     @Override
     public void beforeJob(JobExecution jobExecution) {
         logger.info("任务处理开始了......");
