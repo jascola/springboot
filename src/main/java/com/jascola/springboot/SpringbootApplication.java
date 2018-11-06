@@ -3,7 +3,6 @@ package com.jascola.springboot;
 import com.jascola.demo.DataService;
 import com.jascola.jms.Msg;
 import com.jascola.model.dao.UserDao;
-import com.jascola.model.entity.UserEntity;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.activemq.command.ActiveMQTopic;
 import org.slf4j.Logger;
@@ -65,11 +64,6 @@ public class SpringbootApplication {
         System.out.println(service.sayHello());
         model.addAttribute("hah", dao.selectAll());
         return "index";
-    }
-
-    @RequestMapping(value = "/login")
-    public String login(Model model) {
-        return "check/login";
     }
 
     @RequestMapping(value = "/ex")
