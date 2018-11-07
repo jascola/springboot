@@ -2,6 +2,7 @@ package com.jascola.springboot;
 
 import com.jascola.demo.DataService;
 import com.jascola.jms.Msg;
+import com.jascola.kafka.KafkaSender;
 import com.jascola.model.dao.UserDao;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.activemq.command.ActiveMQTopic;
@@ -54,6 +55,8 @@ public class SpringbootApplication {
     //DataService自动装配，不需要配置bean
     DataService service;
 
+    @Autowired
+    KafkaSender kafkaSender;
     @Resource
     public void setService(DataService service) {
         this.service = service;
@@ -89,7 +92,16 @@ public class SpringbootApplication {
         }
         return "hah";
     }
-
+    @RequestMapping(value = "/kafka")
+    @ResponseBody
+    public String kafka() {
+        try {
+            kafkaSender.sendTest();
+        } catch (Exception e) {
+            logger.info(e.getLocalizedMessage(), e);
+        }
+        return "hah";
+    }
     public static void main(String[] args) {
         SpringApplication.run(SpringbootApplication.class, args);
     }

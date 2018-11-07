@@ -14,7 +14,7 @@ import java.io.IOException;
 
 
 @Configuration
-@ComponentScan({"com.jascola.model.dao","com.jascola.job","com.jascola.jms"})
+@ComponentScan({"com.jascola.model.dao","com.jascola.job","com.jascola.jms","com.jascola.kafka"})
 @PropertySource(value = "classpath:database.properties")
 @EnableScheduling
 public class Config {
